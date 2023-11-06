@@ -1,0 +1,13 @@
+/.pytest_cache
+/test_water_flow.py
+/test_weather.py
+/test_words.py
+/water_flow.py
+/weather.py
+/week02
+/week03
+/week04
+/week05
+/week08
+/words.py
+/__pycache__
