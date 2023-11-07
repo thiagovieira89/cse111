@@ -130,11 +130,14 @@ def compute_molar_mass(symbol_quantity_list, periodic_table_dict):
     1.00794 * 2 + 15.9994 * 1
     18.01528
     """
-    for symbol, quantity in symbol_quantity_list.items():
-        sym = str(symbol[SYMBOL_INDEX])
-        quant = quantity[QUANTITY_INDEX]
+    total_mass = 0.0
 
-    total = (periodic_table_dict[ATOMIC_MASS_INDEX](sym) * quant) + ()
+    for symbol, quantity in symbol_quantity_list:
+        if symbol in periodic_table_dict:
+            atomic_mass = periodic_table_dict[symbol][ATOMIC_MASS_INDEX]
+            total_mass += atomic_mass * quantity
+
+    return total_mass
     # Do the following for each inner list in the
     # compound symbol_quantity_list:
         # Separate the inner list into symbol and quantity.
@@ -147,15 +150,23 @@ def compute_molar_mass(symbol_quantity_list, periodic_table_dict):
 
 def main():
     
-    form_mol = input('The formula for a molecule: ')
-    mass_mol = float(input('The mass in grams of a sample of the substance'))
-
-    parse_formula()
+    formula = input('The formula for a molecule: ')
+    mass_mol = float(input('The mass in grams of a sample of the substance: '))
+    
     periodic_table_dict = make_periodic_table()
+    
+    symbol_quantity_list = parse_formula(formula, periodic_table_dict)
+    compute_molar_mass(symbol_quantity_list, periodic_table_dict)
+    total_mass = compute_molar_mass(symbol_quantity_list, periodic_table_dict)
 
-    for element in periodic_table_dict:
-        name, atomic_mass = element[NAME_INDEX], element[ATOMIC_MASS_INDEX]
-        print(f'{name} {atomic_mass}')
+    total = mass_mol / total_mass
+
+    print(f'Total Molar Mass {total_mass}')
+    print(f'Moles is {total:.5f}')
+
+    # for element in periodic_table_dict:
+    #     name, atomic_mass = element[NAME_INDEX], element[ATOMIC_MASS_INDEX]
+    #     print(f'{name} {atomic_mass}')
      
 
 
